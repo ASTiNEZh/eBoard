@@ -1,7 +1,7 @@
 plugins {
     java
     idea
-    id("org.springframework.boot") version "4.0.3"
+    id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.openapi.generator") version "7.6.0"
     id("org.flywaydb.flyway") version "12.0.3"
@@ -14,7 +14,7 @@ var apiDir = layout.buildDirectory.dir("openapi")!!
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -27,19 +27,25 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // Jackson
     implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 
     // SpringDoc dependencies
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    // я тут переопределяю для "springdoc-openapi-starter-webmvc" зависимость "commons-lang3" с уязвимостью
+    // отключаем старую
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5") {
+        exclude(group = "org.apache.commons", module = "commons-lang3")
+    }
+    // подключаем новую
+    implementation("org.apache.commons:commons-lang3:3.20.0")
 
     // PostgreSQL
     implementation("org.postgresql:postgresql")
 
     // Spring Data JPA
-    implementation("org.springframework.data:spring-data-jpa")
+//    implementation("org.springframework.data:spring-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.42")
@@ -47,6 +53,10 @@ dependencies {
 
     // ModelMapper
     implementation("org.modelmapper:modelmapper:3.2.6")
+
+    // Flyway
+    implementation("org.flywaydb:flyway-core")
+    runtimeOnly("org.flywaydb:flyway-database-postgresql")
 }
 
 openApiGenerate {
