@@ -9,7 +9,7 @@ plugins {
 
 group = "ru.ASTiNEZh"
 version = "0.0.1-SNAPSHOT"
-description = "UsersCRUD"
+description = "AdvertsCRUD"
 var apiDir = layout.buildDirectory.dir("openapi")!!
 
 java {
@@ -90,5 +90,5 @@ tasks.named("compileJava") {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
+	useJUnitPlatform()
 }
