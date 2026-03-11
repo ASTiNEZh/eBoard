@@ -1,9 +1,11 @@
-openapi: 3.0.3
+openapi: 3.1.0
+
 info:
   title: Модуль приложения eBoard реализующий CRUD-операции для сущности User
   version: 0.0.1
+
 servers:
-  - url: http://localhost:8081
+  - url: http://localhost:8082
     description: адрес сервера
 
 paths:
