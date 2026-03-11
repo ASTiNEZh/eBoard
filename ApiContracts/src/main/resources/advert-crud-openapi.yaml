@@ -32,4 +32,4 @@ components:
         owner:
           type: object
           schema:
-            $ref: '../UsersCRUD/src/main/resources/users-crud-openapi.yaml#/components/schemas/UserDTO'
+            $ref: './users-crud-openapi.yaml#/components/schemas/UserDTO'

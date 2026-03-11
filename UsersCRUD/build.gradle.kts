@@ -44,7 +44,6 @@ dependencies {
     implementation("org.postgresql:postgresql")
 
     // Spring Data JPA
-//    implementation("org.springframework.data:spring-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // Lombok
@@ -57,11 +56,14 @@ dependencies {
     // Flyway
     implementation("org.flywaydb:flyway-core")
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
+
+    // Устанавливаем зависимость с ApiContracts
+    implementation(project(":ApiContracts"))
 }
 
 openApiGenerate {
     generatorName.set("spring")
-    inputSpec.set("$rootDir/UsersCRUD/src/main/resources/openapi.yaml")
+    inputSpec.set(project(":ApiContracts").file("src/main/resources/users-crud-openapi.yaml").absolutePath)
     outputDir.set(apiDir.get().asFile.absolutePath)
     apiPackage.set("$group.controller")
     modelPackage.set("$group.dto")
