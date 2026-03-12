@@ -65,7 +65,7 @@ openApiGenerate {
     generatorName.set("spring")
     inputSpec.set(
         project(":ApiContracts")
-            .file("src/main/resources/users-crud-openapi.yaml")
+            .file("src/main/resources/adverts-crud-openapi.yaml")
             .toURI()
             .toString()
     )

@@ -63,7 +63,7 @@ paths:
       operationId: deleteUser
       tags:
         - User
-      description: Получить данные о пользователя
+      description: Удалить данные о пользователя
       parameters:
         - $ref: "#/components/parameters/uuid"
       responses:
