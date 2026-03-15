@@ -19,51 +19,8 @@ dependencies {
     compileOnly("org.openapitools:jackson-databind-nullable:0.2.6")
 }
 
-// Генерация OpenAPI
-val apiSpecs = fileTree("src/main/resources").matching {
-    include("**/*-openapi.yaml", "**/*-openapi.yml")
-}
-
-val generateTasks = mutableListOf<String>()
-
-apiSpecs.forEach { spec ->
-    val baseName = spec.nameWithoutExtension
-        .replace(Regex("[-.]"), "_")
-
-    val taskName = "generate${baseName.replaceFirstChar { it.uppercaseChar() }}"
-    generateTasks += taskName
-
-    tasks.register<GenerateTask>(taskName) {
-        generatorName.set("spring")
-
-        // ⬇️ РАБОЧЕЕ РЕШЕНИЕ: правильный URI для Windows
-        val uri = spec.canonicalFile.toURI().toString()
-            .replace("file:/", "file:///")
-            .replace("\\", "/")
-        inputSpec.set(uri)
-
-        outputDir.set(layout.buildDirectory.dir("generated/$taskName").get().asFile.absolutePath)
-        apiPackage.set("${project.group}.${baseName.lowercase()}.controller")
-        modelPackage.set("${project.group}.${baseName.lowercase()}.dto")
-
-        configOptions.set(mapOf(
-            "dateLibrary" to "java8",
-            "interfaceOnly" to "true",
-            "useJakartaEe" to "true",
-            "skipDefaultInterface" to "true"
-        ))
-
-        globalProperties.set(mapOf(
-            "apis" to "",
-            "models" to ""
-        ))
-    }
-}
-
-tasks.compileJava {
-    dependsOn(generateTasks)
-}
-
-sourceSets["main"].java {
-    srcDir(layout.buildDirectory.dir("generated"))
-}
+//sourceSets.forEach { source ->
+//    source.resources.forEach {
+//        tasks.named {  }
+//    }
+//}
