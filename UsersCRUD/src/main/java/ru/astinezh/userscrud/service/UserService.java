@@ -19,7 +19,7 @@ public class UserService {
     public User findById(UUID uuid) {
         User user = userRepository.findById(uuid).orElse(null);
         if (user == null)
-            return user;
+            return null;
         else if (!user.isDeleted())
             return user;
         else

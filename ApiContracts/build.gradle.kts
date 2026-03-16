@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.register
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
@@ -5,7 +6,9 @@ plugins {
     id("org.openapi.generator") version "7.3.0"
 }
 
-group = "com.example"
+group = "ru.ASTiNEZh"
+version = "0.0.1-SNAPSHOT"
+description = "ApiContrascts"
 
 repositories {
     mavenCentral()
@@ -19,8 +22,33 @@ dependencies {
     compileOnly("org.openapitools:jackson-databind-nullable:0.2.6")
 }
 
-//sourceSets.forEach { source ->
-//    source.resources.forEach {
-//        tasks.named {  }
-//    }
-//}
+val projGroup = group
+sourceSets.filter { it.name != "test" }.forEach { source ->
+    source.resources.forEach {
+        val fileName = it.nameWithoutExtension
+        val generateTask = tasks.register<GenerateTask>(fileName) {
+            generatorName.set("spring")
+            library.set("spring-cloud")
+            inputSpec.set(it.absolutePath.replace("\\", "/"))
+            outputDir.set(layout.buildDirectory.dir("/openapi/$fileName").get().toString())
+            apiPackage.set("$projGroup.controller")
+            modelPackage.set("$projGroup.dto")
+            configOptions.set(
+                mapOf(
+                    "dateLibrary" to "java8",
+                    "interfaceOnly" to "true",
+                    "useJakartaEe" to "true"
+                )
+            )
+        }
+
+        tasks.named("compileJava") {
+            dependsOn(generateTask)
+        }
+
+        sourceSets.main {
+            java.srcDir("${layout.buildDirectory.get().toString()}/openapi/$fileName/src/main/java")
+        }
+    }
+}
+

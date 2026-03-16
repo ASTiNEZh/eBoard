@@ -9,9 +9,9 @@ import java.util.UUID;
 
 @Service
 public class AdvertService {
-    @Autowired
     private final AdvertRepository advertRepository;
 
+    @Autowired
     public AdvertService(AdvertRepository advertRepository) {
         this.advertRepository = advertRepository;
     }
@@ -19,7 +19,7 @@ public class AdvertService {
     public Advert findById(UUID uuid) {
         Advert advert = advertRepository.findById(uuid).orElse(null);
         if (advert == null)
-            return advert;
+            return null;
         else if (!advert.isDeleted())
             return advert;
         else
