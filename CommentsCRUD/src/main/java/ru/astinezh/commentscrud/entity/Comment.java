@@ -1,4 +1,4 @@
-package ru.astinezh.commentscrud.controller.entity;
+package ru.astinezh.commentscrud.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "Adverts")
+@Table(name = "Comments")
 public class Comment {
     @Id
     @Column(name = "uuid")
