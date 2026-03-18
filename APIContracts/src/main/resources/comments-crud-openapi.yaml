@@ -1,69 +1,69 @@
 openapi: 3.1.0
 
 info:
-  title: Модуль приложения eBoard реализующий CRUD-операции для сущности User
-  version: 0.0.2
+  title: Модуль приложения eBoard реализующий CRUD-операции для сущности Comments
+  version: 0.0.1
 
 servers:
-  - url: http://localhost:8082
+  - url: http://localhost:8083
     description: адрес сервера
-  
+
 paths:
-  /adverts/new:
+  /comments/new:
     post:
-      operationId: createAdvert
+      operationId: createComment
       tags:
-        - Advert
-      description: Создать новое объявление
+        - Comment
+      description: Создать новый комментарий
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AdvertDTO"
+              $ref: "#/components/schemas/CommentDTO"
       responses:
         '200':
           description: OK
         'default':
           description: Что-то пошло не так
-  /adverts/{uuid}:
+  /comments/{uuid}:
     get:
-      operationId: getAdvert
+      operationId: getComment
       tags:
-        - Advert
-      description: Получить данные о объявлении
+        - Comment
+      description: Получить данные о комментарии
       parameters:
         - $ref: "common.yaml#/components/parameters/uuid"
       responses:
         '200':
-          description: OK
+          description: ОК
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AdvertDTO"
+                $ref: "#/components/schemas/CommentDTO"
     put:
-      operationId: updateAdvert
+      operationId: updateComment
       tags:
-        - Advert
-      description: Обновить данные о объявлении
+        - Comment
+      description: Обновить данные о комментарии
       parameters:
         - $ref: "common.yaml#/components/parameters/uuid"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AdvertDTO"
+              $ref: "#/components/schemas/CommentDTO"
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AdvertDTO"
+                $ref: "#/components/schemas/CommentDTO"
     delete:
-      operationId: deleteAdvert
+      operationId: deleteComment
       tags:
-        - Advert
-      description: Удалить данные о объявлении
+        - Comment
+      description: Удалить данные о комментарии
       parameters:
         - $ref: "common.yaml#/components/parameters/uuid"
       responses:
@@ -72,28 +72,26 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AdvertDTO"
+                $ref: "#/components/schemas/CommentDTO"
 
 components:
   schemas:
-    AdvertDTO:
-      title: Объявление
+    CommentDTO:
+      title: Комментарий
       type: object
       properties:
         uuid:
           type: string
           format: uuid
-          description: UUID объявления
-        title:
+          description: UUID комментария
+        text:
           type: string
-          description: Заголовок объявления
-        cost:
-          type: number
-          format: float
-        description:
-          type: string
-          description: Описание объявления
+          description: Текст комментария
         owner:
           type: object
           schema:
             $ref: 'users-crud-openapi.yaml#/components/schemas/UserDTO'
+        advert:
+          type: object
+          schema:
+            $ref: 'adverts-crud-openapi.yaml#/components/schemas/AdvertDTO'

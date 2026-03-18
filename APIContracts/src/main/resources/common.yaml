@@ -1,0 +1,16 @@
+openapi: 3.1.0
+info:
+  title: Служебный файл для хранения общих параметров, схем и т.д.
+  version: 0.0.1
+
+paths: {}
+
+components:
+  parameters:
+    uuid:
+      required: true
+      name: uuid
+      in: path
+      schema:
+        type: string
+        format: uuid

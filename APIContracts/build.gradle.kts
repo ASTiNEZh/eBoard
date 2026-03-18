@@ -8,18 +8,18 @@ plugins {
 
 group = "ru.ASTiNEZh"
 version = "0.0.1-SNAPSHOT"
-description = "APIContrascts"
+description = "ApiContrascts"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web:3.2.4")
-    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
-    implementation("jakarta.annotation:jakarta.annotation-api:2.1.1")
-    implementation("io.swagger.core.v3:swagger-annotations:2.2.20")
-    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+    compileOnly("org.springframework.boot:spring-boot-starter-web:3.2.4")
+    compileOnly("jakarta.validation:jakarta.validation-api:3.0.2")
+    compileOnly("jakarta.annotation:jakarta.annotation-api:2.1.1")
+    compileOnly("io.swagger.core.v3:swagger-annotations:2.2.20")
+    compileOnly("org.openapitools:jackson-databind-nullable:0.2.6")
 }
 
 val projGroup = group
