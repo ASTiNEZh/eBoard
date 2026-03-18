@@ -7,7 +7,7 @@ plugins {
 
 group = "ru.ASTiNEZh"
 version = "0.0.1-SNAPSHOT"
-description = "AdvertsCRUD"
+description = "CommentsCRUD"
 
 java {
     toolchain {
@@ -55,5 +55,5 @@ dependencies {
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
