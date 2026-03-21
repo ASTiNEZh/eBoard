@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: Модуль приложения eBoard реализующий CRUD-операции для сущности User
+  version: 0.0.1
+servers:
+  - url: http://localhost:8082
+    description: адрес сервера
+
+paths:
+  /users/new:
+    post:
+      operationId: createUser
+      tags:
+        - User
+      description: Создать нового пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDTO"
+      responses:
+        '200':
+          description: OK
+        'default':
+          description: Что-то пошло не так
+  /users/{uuid}:
+    get:
+      operationId: getUser
+      tags:
+        - User
+      description: Получить данные о пользователя
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+        'default':
+          description: Что-то пошло не так
+    put:
+      operationId: updateUser
+      tags:
+        - User
+      description: Обновить данные о пользователе
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDTO"
+      responses:
+        '200':
+          description: OK
+        'default':
+          description: Что-то пошло не так
+    delete:
+      operationId: deleteUser
+      tags:
+        - User
+      description: Получить данные о пользователя
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      responses:
+        '200':
+          description: OK
+        'default':
+          description: Что-то пошло не так
+
+components:
+  schemas:
+    UserDTO:
+      title: Пользователь
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: UUID пользователя
+        surname:
+          type: string
+          description: Фамилия
+          example: Иванов
+        firstName:
+          type: string
+          description: Имя
+          example: Иван
+        lastName:
+          type: string
+          description: Отчество
+          example: Иванович
+        phone:
+          type: string
+          description: Номер телефона
+          example: "+8(800)555-35-35"
+        email:
+          type: string
+          description: Адрес e-mail
+          example: "vanya.ivanov123@mail.com"
