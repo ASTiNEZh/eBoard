@@ -22,7 +22,7 @@ public class Comment {
     @Column(name = "owner_uuid")
     private Object owner;
 
-    @Column(name = "owner_uuid")
+    @Column(name = "advert_uuid")
     private Object advert;
 
     @Column(name = "deleted")

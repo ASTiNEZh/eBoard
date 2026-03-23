@@ -27,4 +27,10 @@ public class User {
 
     @Column(name = "deleted")
     private boolean deleted;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
 }
