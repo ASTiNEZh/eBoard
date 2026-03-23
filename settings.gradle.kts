@@ -1,7 +1,7 @@
 rootProject.name = "eBoard"
 
 include("UsersCRUD")
-include("ApiContracts")
+include("APIContracts")
 include("AdvertsCRUD")
 include("DBMigrations")
 include("CommentsCRUD")

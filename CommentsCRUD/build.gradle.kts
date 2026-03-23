@@ -50,8 +50,8 @@ dependencies {
     /** ModelMapper */
     implementation("org.modelmapper:modelmapper:3.2.6")
 
-    /** Устанавливаем зависимость с ApiContracts */
-    implementation(project(":ApiContracts"))
+    /** Устанавливаем зависимость с APIContracts */
+    implementation(project(":APIContracts"))
 }
 
 tasks.withType<Test> {

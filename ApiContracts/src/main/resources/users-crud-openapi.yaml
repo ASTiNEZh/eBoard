@@ -1,11 +1,10 @@
-openapi: 3.1.0
-
+openapi: 3.0.3
 info:
   title: Модуль приложения eBoard реализующий CRUD-операции для сущности User
   version: 0.0.1
 
 servers:
-  - url: http://localhost:8082
+  - url: http://localhost:8081
     description: адрес сервера
 
 paths:
@@ -32,7 +31,7 @@ paths:
         - User
       description: Получить данные о пользователя
       parameters:
-        - $ref: "#/components/parameters/uuid"
+        - $ref: "common.yaml#/components/parameters/uuid"
       responses:
         '200':
           description: OK
@@ -48,7 +47,7 @@ paths:
         - User
       description: Обновить данные о пользователе
       parameters:
-        - $ref: "#/components/parameters/uuid"
+        - $ref: "common.yaml#/components/parameters/uuid"
       requestBody:
         content:
           application/json:
@@ -63,9 +62,9 @@ paths:
       operationId: deleteUser
       tags:
         - User
-      description: Удалить данные о пользователя
+      description: Получить данные о пользователя
       parameters:
-        - $ref: "#/components/parameters/uuid"
+        - $ref: "common.yaml#/components/parameters/uuid"
       responses:
         '200':
           description: OK
@@ -73,14 +72,6 @@ paths:
           description: Что-то пошло не так
 
 components:
-  parameters:
-    uuid:
-      required: true
-      name: uuid
-      in: path
-      schema:
-        type: string
-        format: uuid
   schemas:
     UserDTO:
       title: Пользователь

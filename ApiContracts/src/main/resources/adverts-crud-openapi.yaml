@@ -32,7 +32,7 @@ paths:
         - Advert
       description: Получить данные о объявлении
       parameters:
-        - $ref: "#/components/parameters/uuid"
+        - $ref: "common.yaml#/components/parameters/uuid"
       responses:
         '200':
           description: OK
@@ -46,7 +46,7 @@ paths:
         - Advert
       description: Обновить данные о объявлении
       parameters:
-        - $ref: "#/components/parameters/uuid"
+        - $ref: "common.yaml#/components/parameters/uuid"
       requestBody:
         content:
           application/json:
@@ -65,7 +65,7 @@ paths:
         - Advert
       description: Удалить данные о объявлении
       parameters:
-        - $ref: "#/components/parameters/uuid"
+        - $ref: "common.yaml#/components/parameters/uuid"
       responses:
         '200':
           description: OK
@@ -75,14 +75,6 @@ paths:
                 $ref: "#/components/schemas/AdvertDTO"
 
 components:
-  parameters:
-    uuid:
-      required: true
-      name: uuid
-      in: path
-      schema:
-        type: string
-        format: uuid
   schemas:
     AdvertDTO:
       title: Объявление
