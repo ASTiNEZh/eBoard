@@ -32,7 +32,7 @@ paths:
         - User
       description: Получить данные о пользователя
       parameters:
-        - $ref: "common.yaml#/components/parameters/uuid"
+        - $ref: "#/components/parameters/uuid"
       responses:
         '200':
           description: OK
@@ -48,7 +48,7 @@ paths:
         - User
       description: Обновить данные о пользователе
       parameters:
-        - $ref: "common.yaml#/components/parameters/uuid"
+        - $ref: "#/components/parameters/uuid"
       requestBody:
         content:
           application/json:
@@ -65,7 +65,7 @@ paths:
         - User
       description: Удалить данные о пользователя
       parameters:
-        - $ref: "common.yaml#/components/parameters/uuid"
+        - $ref: "#/components/parameters/uuid"
       responses:
         '200':
           description: OK
@@ -73,6 +73,14 @@ paths:
           description: Что-то пошло не так
 
 components:
+  parameters:
+    uuid:
+      required: true
+      name: uuid
+      in: path
+      schema:
+        type: string
+        format: uuid
   schemas:
     UserDTO:
       title: Пользователь
@@ -94,11 +102,3 @@ components:
           type: string
           description: Отчество
           example: Иванович
-        phone:
-          type: string
-          description: Номер телефона
-          example: "+8(800)555-35-35"
-        email:
-          type: string
-          description: Адрес e-mail
-          example: "vanya.ivanov123@mail.com"
