@@ -1,8 +1,11 @@
+import io.swagger.v3.parser.OpenAPIV3Parser
+import io.swagger.v3.parser.core.models.ParseOptions
 import org.gradle.kotlin.dsl.register
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
     id("java-library")
+    id("maven-publish")
     id("org.openapi.generator") version "7.3.0"
 }
 
@@ -24,8 +27,17 @@ dependencies {
 
 val projGroup = group
 sourceSets.filter { it.name != "test" }.forEach { source ->
-    source.resources.forEach {
+    source.resources.filter { it.isFile }.filter { it.extension in listOf("yaml", "yml", "json") }.forEach {
+        val fileUri = it.absoluteFile.toURI().toString()
+        val options = ParseOptions().apply {
+            isResolve = true
+        }
+        val result = OpenAPIV3Parser().readLocation(fileUri, emptyList(), options)
+        val openapi = result?.openAPI
+        val versionAPI = openapi?.info?.version ?: "1.0.0"
+
         val fileName = it.nameWithoutExtension
+
         val generateTask = tasks.register<GenerateTask>(fileName) {
             generatorName.set("spring")
             library.set("spring-cloud")
@@ -42,13 +54,41 @@ sourceSets.filter { it.name != "test" }.forEach { source ->
             )
         }
 
-        tasks.named("compileJava") {
+//        sourceSets.main {
+//            java.srcDir("${layout.buildDirectory.get().toString()}/openapi/$fileName/src/main/java")
+//        }
+
+        val jarTask = tasks.register<Jar>("${fileName}.jar") {
+            archiveBaseName.set(fileName)
+            archiveClassifier.set("")
+            archiveVersion.set(versionAPI)
+
+            from("${layout.buildDirectory.dir("/openapi/$fileName").get()}/src/main/java") {
+                include("**/dto/**/*.java")
+                include("**/controller/**/*.java")
+            }
+
             dependsOn(generateTask)
         }
 
-        sourceSets.main {
-            java.srcDir("${layout.buildDirectory.get().toString()}/openapi/$fileName/src/main/java")
+        publishing {
+            publications {
+                create<MavenPublication>(fileName) {
+                    groupId = group as String?
+                    artifactId = fileName
+                    version = versionAPI
+
+                    artifact(tasks.named<Jar>("${fileName}.jar"))
+                }
+            }
+
+            repositories {
+                mavenLocal()
+            }
+        }
+
+        tasks.assemble {
+            dependsOn(jarTask)
         }
     }
 }
-

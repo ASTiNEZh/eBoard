@@ -16,6 +16,7 @@ java {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -51,7 +52,7 @@ dependencies {
     implementation("org.modelmapper:modelmapper:3.2.6")
 
     /** Устанавливаем зависимость с APIContracts */
-    implementation(project(":APIContracts"))
+    implementation("ru.ASTiNEZh:adverts-crud-openapi:0.0.2")
 }
 
 tasks.withType<Test> {
