@@ -1,0 +1,97 @@
+openapi: 3.1.0
+
+info:
+  title: Модуль приложения eBoard реализующий CRUD-операции для сущности Comments
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8083
+    description: адрес сервера
+
+paths:
+  /comments/new:
+    post:
+      operationId: createComment
+      tags:
+        - Comment
+      description: Создать новый комментарий
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentDTO"
+      responses:
+        '200':
+          description: OK
+        'default':
+          description: Что-то пошло не так
+  /comments/{uuid}:
+    get:
+      operationId: getComment
+      tags:
+        - Comment
+      description: Получить данные о комментарии
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      responses:
+        '200':
+          description: ОК
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentDTO"
+    put:
+      operationId: updateComment
+      tags:
+        - Comment
+      description: Обновить данные о комментарии
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentDTO"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentDTO"
+    delete:
+      operationId: deleteComment
+      tags:
+        - Comment
+      description: Удалить данные о комментарии
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentDTO"
+
+components:
+  schemas:
+    CommentDTO:
+      title: Комментарий
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: UUID комментария
+        text:
+          type: string
+          description: Текст комментария
+        owner:
+          type: object
+          schema:
+            $ref: 'users-crud-openapi.yaml#/components/schemas/UserDTO'
+        advert:
+          type: object
+          schema:
+            $ref: 'adverts-crud-openapi.yaml#/components/schemas/AdvertDTO'

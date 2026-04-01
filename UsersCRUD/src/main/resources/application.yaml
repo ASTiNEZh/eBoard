@@ -1,0 +1,19 @@
+spring:
+  application.name: UsersCRUD
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/e_board
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+  flyway:
+    enabled: true
+    locations: classpath:migration
+
+server:
+  port: 8082
