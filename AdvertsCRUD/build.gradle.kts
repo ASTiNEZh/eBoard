@@ -52,7 +52,7 @@ dependencies {
     implementation("org.modelmapper:modelmapper:3.2.6")
 
     /** Устанавливаем зависимость с APIContracts */
-    implementation("ru.ASTiNEZh:adverts-crud-openapi:0.0.2")
+    implementation("${group}:adverts-crud-openapi:0.0.3")
 }
 
 tasks.withType<Test> {
