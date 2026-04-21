@@ -1,0 +1,54 @@
+openapi: 3.1.0
+
+info:
+  title: Модуль приложения eBoard реализующий передачу и хранение файлов
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8082
+    description: адрес сервера
+  
+paths:
+  /files/upload:
+    post:
+      tags:
+        - Photo
+      summary: Загрузка одного или нескольких файлов
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                uuid:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: Файлы успешно загружены
+  /files/{id}:
+    get:
+      tags:
+        - Photo
+      summary: Скачивание файла по ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Файл изображения или любого типа
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary

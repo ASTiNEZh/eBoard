@@ -28,7 +28,7 @@ public class AdvertController implements AdvertsApi {
     }
 
     @Override
-    @PreAuthorize("hasRole('role_admin')")
+    @PreAuthorize("hasRole('role_user')")
     public ResponseEntity<AdvertDTO> deleteAdvert(UUID uuid) {
         advertService.delete(uuid);
         return new ResponseEntity<>(HttpStatus.OK);

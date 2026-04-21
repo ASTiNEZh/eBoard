@@ -1,0 +1,12 @@
+spring:
+  application.name: FileManager
+  tomcat:
+    max-http-form-post-size: 50MB
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+app.storage.root: /data/uploads
+server:
+  port: 8085

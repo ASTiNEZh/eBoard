@@ -1,4 +1,4 @@
-package ru.astinezh.commentscrud.entity;
+package ru.astinezh.advertscrud.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,8 +16,9 @@ public class Comment {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "owner_uuid")
-    private Object owner;
+    @ManyToOne
+    @JoinColumn(name = "owner_uuid")
+    private User owner;
 
     @ManyToOne()
     @JoinColumn(name = "advert_uuid")

@@ -6,7 +6,7 @@ plugins {
 
 group = "ru.ASTiNEZh"
 version = "0.0.1-SNAPSHOT"
-description = "AdvertViewer"
+description = "CategoryCRUD"
 
 java {
     toolchain {
@@ -16,6 +16,7 @@ java {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -48,6 +49,14 @@ dependencies {
 
     /** ModelMapper */
     implementation("org.modelmapper:modelmapper:3.2.6")
+
+    /** Устанавливаем зависимость с APIContracts */
+    implementation("${group}:category-crud-openapi:0.0.1")
+
+    /** Spring Security */
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 }
 
 tasks.withType<Test> {

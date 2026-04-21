@@ -6,7 +6,7 @@ plugins {
 
 group = "ru.ASTiNEZh"
 version = "0.0.1-SNAPSHOT"
-description = "AdvertViewer"
+description = "FileManager"
 
 java {
     toolchain {
@@ -15,6 +15,7 @@ java {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -36,18 +37,12 @@ dependencies {
     // подключаем новую
     implementation("org.apache.commons:commons-lang3:3.20.0")
 
-    /** PostgreSQL */
-    implementation("org.postgresql:postgresql")
-
-    /** Spring Data JPA */
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
     /** Lombok */
     compileOnly("org.projectlombok:lombok:1.18.42")
     annotationProcessor("org.projectlombok:lombok:1.18.42")
 
-    /** ModelMapper */
-    implementation("org.modelmapper:modelmapper:3.2.6")
+    /** Устанавливаем зависимость с APIContracts */
+    implementation("${group}:file-manager-openapi:0.0.1")
 }
 
 tasks.withType<Test> {

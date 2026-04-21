@@ -1,0 +1,24 @@
+spring:
+  application.name: CategoryCRUD
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/e_board
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_SERVER_URL:http://127.0.0.1:8282}/realms/eBoard
+          jwk-set-uri: ${KEYCLOAK_SERVER_URL:http://127.0.0.1:8282}/realms/eBoard/protocol/openid-connect/certs
+
+jwt:
+  auth:
+    converter:
+      resource-id: backend
+      principle-attribute: preferred_username
+
+server:
+  port: 8087

@@ -1,4 +1,4 @@
-package ru.astinezh.advertscrud.entity;
+package ru.astinezh.commentscrud.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

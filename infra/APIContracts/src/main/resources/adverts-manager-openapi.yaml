@@ -1,0 +1,170 @@
+openapi: 3.0.3
+
+info:
+  title: Модуль приложения eBoard реализующий CRUD-операции для сущности Advert
+  version: 0.0.3
+
+servers:
+  - url: http://localhost:8082
+    description: адрес сервера
+  
+paths:
+  /adverts:
+    get:
+      operationId: getAdverts
+      tags:
+        - Advert
+      description: Получить список объявлений с пагинацией и сортировкой
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Номер страницы (начиная с 0)
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 10
+          description: Количество элементов на странице
+        - name: sortField
+          in: query
+          schema:
+            type: string
+            default: "cost"
+          description: Поле для сортировки (например, title, cost, createdAt)
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum: [ASC, DESC]
+            default: ASC
+          description: Направление сортировки
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageAdvertDTO"
+        'default':
+          description: Ошибка
+
+  /adverts/{categoryUuid}:
+    get:
+      operationId: getAdvertsByCategory
+      tags:
+        - Advert
+      description: Получить список объявлений по UUID категории с пагинацией и сортировкой
+      parameters:
+        - name: categoryUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: UUID категории
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: sortField
+          in: query
+          schema:
+            type: string
+            default: "cost"
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum: [ASC, DESC]
+            default: ASC
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageAdvertDTO"
+
+components:
+  schemas:
+    AdvertDTO:
+      title: Объявление
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: UUID объявления
+        title:
+          type: string
+          description: Заголовок объявления
+        cost:
+          type: number
+          format: float
+        description:
+          type: string
+          description: Описание объявления
+        owner:
+          type: object
+          schema:
+            $ref: 'users-crud-openapi.yaml#/components/schemas/UserDTO'
+        categories:
+          type: array
+          items:
+            $ref: 'category-crud-openapi.yaml#/components/schemas/CategoryDTO'
+        comments:
+          type: array
+          items:
+            $ref: 'comments-crud-openapi.yaml#/components/schemas/CommentDTO'
+    PageAdvertDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "adverts-crud-openapi.yaml#/components/schemas/AdvertDTO"
+        pageable:
+          type: object
+          properties:
+            pageNumber:
+              type: integer
+            pageSize:
+              type: integer
+            sort:
+              type: object
+              properties:
+                sorted:
+                  type: boolean
+                unsorted:
+                  type: boolean
+                empty:
+                  type: boolean
+        totalElements:
+          type: integer
+          description: Общее количество элементов
+        totalPages:
+          type: integer
+          description: Общее количество страниц
+        last:
+          type: boolean
+        first:
+          type: boolean
+        size:
+          type: integer
+        number:
+          type: integer
+        sort:
+          type: object
+        numberOfElements:
+          type: integer
+        empty:
+          type: boolean

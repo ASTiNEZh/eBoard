@@ -1,0 +1,103 @@
+openapi: 3.1.0
+
+info:
+  title: Модуль приложения eBoard реализующий CRUD-операции для сущности Category
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8083
+    description: адрес сервера
+
+paths:
+  /categories/new:
+    post:
+      operationId: createCategory
+      tags:
+        - Category
+      description: Создать новую категорию
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryDTO"
+      responses:
+        '200':
+          description: OK
+        'default':
+          description: Что-то пошло не так
+  /categories/{uuid}:
+    get:
+      operationId: getCategory
+      tags:
+        - Category
+      description: Получить данные о категории
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      responses:
+        '200':
+          description: ОК
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryDTO"
+    put:
+      operationId: updateCategory
+      tags:
+        - Category
+      description: Обновить данные о категории
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryDTO"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryDTO"
+    delete:
+      operationId: deleteCategory
+      tags:
+        - Category
+      description: Удалить данные о категории
+      parameters:
+        - $ref: "common.yaml#/components/parameters/uuid"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryDTO"
+
+components:
+  schemas:
+    CategoryDTO:
+      title: Категория
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: UUID категории
+        title:
+          type: string
+        description:
+          type: string
+          description: Описание категории
+        parentCategory:
+          type: object
+          schema:
+            $ref: '#/components/schemas/CategoryDTO'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
