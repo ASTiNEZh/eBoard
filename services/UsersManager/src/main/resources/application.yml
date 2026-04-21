@@ -1,0 +1,44 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_SERVER_URL:http://127.0.0.1:8282}/realms/eBoard
+          jwk-set-uri: ${KEYCLOAK_SERVER_URL:http://127.0.0.1:8282}/realms/eBoard/protocol/openid-connect/certs
+      client:
+        registration:
+          keycloak:
+            client-id: backend
+            client-secret: ${KEYCLOAK_CLIENT_SECRET:sQXpZ7WIbIF7uaT8Ts8J29LxE5sBPloI}
+            authorization-grant-type: client_credentials
+            scope: openid
+            provider: keycloak
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_SERVER_URL:http://127.0.0.1:8282}/realms/eBoard
+            user-name-attribute: preferred_username
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+jwt:
+  auth:
+    converter:
+      resource-id: backend
+      principle-attribute: preferred_username
+
+service:
+  user-crud:
+    name: UserCRUD
+    url: 127.0.0.1:8082
+    path:
+
+keycloak:
+  auth-server-url: ${KEYCLOAK_SERVER_URL:http://127.0.0.1:8282}
+  realm: eBoard
+  admin-client-id: backend
+  admin-client-secret: ${KEYCLOAK_CLIENT_SECRET:sQXpZ7WIbIF7uaT8Ts8J29LxE5sBPloI}
+
+server:
+  port: 8084

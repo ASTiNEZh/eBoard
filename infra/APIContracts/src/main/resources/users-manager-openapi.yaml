@@ -1,0 +1,120 @@
+openapi: 3.1.0
+
+info:
+  title: Модуль приложения eBoard управляющий сущностями User
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8084
+    description: адрес сервера
+
+paths:
+  /account/signUp:
+    post:
+      operationId: registerUser
+      tags:
+        - UserManager
+      description: Зарегистрировать нового пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegisterDTO"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: UUID new user
+        'default':
+          description: Что-то пошло не так
+  /account/signIn:
+    post:
+      operationId: login
+      tags:
+        - UserManager
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginDTO"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLoginResponseDTO"
+        'default':
+          description: Что-то пошло не так
+components:
+  schemas:
+    UserRegisterDTO:
+      type: object
+      title: Сущность пользователя для регистрации
+      properties:
+        surname:
+          type: string
+          description: Фамилия
+          example: Иванов
+        firstName:
+          type: string
+          description: Имя
+          example: Иван
+        lastName:
+          type: string
+          description: Отчество
+          example: Иванович
+        email:
+          type: string
+          description: электронная почта
+          example: example@mail.com
+        phone:
+          type: string
+          description: номер телефона
+          example: +8(800)555-35-35
+        password:
+          type: string
+          description: пароль
+          example: password
+    UserLoginDTO:
+      type: object
+      title: Сущность пользователя для авторизации
+      properties:
+        email:
+          type: string
+          description: электронная почта
+          example: example@mail.com
+        password:
+          type: string
+          description: пароль
+          example: password
+    UserLoginResponseDTO:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT-токен доступа
+        expires_in:
+          type: integer
+          description: Время жизни access_token в секундах
+        refresh_expires_in:
+          type: integer
+          description: Время жизни refresh_token в секундах
+        refresh_token:
+          type: string
+          description: Токен обновления
+        token_type:
+          type: string
+          description: Тип токена
+        not-before-policy:
+          type: integer
+          description: Время в секундах, до которого токен недействителен
+        session_state:
+          type: string
+          description: Идентификатор сессии
+        scope:
+          type: string
+          description: Запрошенные области доступа (scopes)
